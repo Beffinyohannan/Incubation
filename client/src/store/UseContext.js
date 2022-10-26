@@ -2,6 +2,16 @@ import { createContext,useState } from "react";
 
 export const userContext= createContext('')
 
-function user({chlidren}) {
-    
+function UserDetail({chlidren}) {
+
+    const [userdetails,serUserdetails]=useState('hello')
+
+    return(
+
+        <userContext.Provider value={{userdetails,serUserdetails}}>
+            {chlidren}
+        </userContext.Provider>
+    )
 }
+
+export default UserDetail

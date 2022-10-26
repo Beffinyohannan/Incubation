@@ -14,7 +14,7 @@ const applicationSchema = mongoose.Schema({
      default:"pending" 
    },
    image:{
-    type:Array,
+    type:String,
     require:true
    }
 })

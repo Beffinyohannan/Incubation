@@ -4,6 +4,11 @@ const User = require('../model/userModel');
 const AppliForm =require('../model/applicationModel')
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
+const multer = require('multer')
+
+
+
+  
 
 
 
