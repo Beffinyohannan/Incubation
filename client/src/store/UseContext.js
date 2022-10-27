@@ -1,16 +1,16 @@
 import { createContext,useState } from "react";
 
-export const userContext= createContext('')
+export const UserContext= createContext('')
 
 function UserDetail({chlidren}) {
 
-    const [userdetails,serUserdetails]=useState('hello')
+    const [userdetails,serUserdetails]=useState(null)
 
     return(
 
-        <userContext.Provider value={{userdetails,serUserdetails}}>
+        <UserContext.Provider value={{userdetails,serUserdetails}}>
             {chlidren}
-        </userContext.Provider>
+        </UserContext.Provider>
     )
 }
 

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const uri = 'mongodb+srv://beffin:beffin123@cluster0.vmiklra.mongodb.net/incubation?retryWrites=true&w=majority'
+const uri = process.env.URI
 
  const connectDb = async () => {
   try {

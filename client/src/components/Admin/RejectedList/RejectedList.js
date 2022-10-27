@@ -1,12 +1,13 @@
-import axios from 'axios'
+import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react'
 import { ApplicationContext } from '../../../store/ApplicationContext'
 
-function Dashboard() {
+function RejectedList() {
+
     const [state, setState] = useState([])
     const [showModal, setShowModal] = useState(false);
     const { applications, setApplications } = useContext(ApplicationContext)
-    const [errorMessage, setErrorMessage] = useState('')
+    // const [errorMessage, setErrorMessage] = useState('')
     const [modalData, setModalData] = useState({
         name: '', address: '', email: '',
         phone: '', company_name: '',
@@ -14,9 +15,8 @@ function Dashboard() {
         image: '', status: ''
     });
 
-
     useEffect(() => {
-        axios.get("http://localhost:5000/admin/dashboard").then((response) => {
+        axios.get("http://localhost:5000/admin/rejected-list").then((response) => {
             // console.log(response.data);
             const { data } = response
             if (response.data) {
@@ -24,10 +24,10 @@ function Dashboard() {
                 // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
 
             }
+        }).catch((error)=>{
+            console.log(error.message);
         })
     })
-
-    // console.log(applications,'appliction');
 
     const fullDetails = (id) => {
         state.filter((obj) => {
@@ -42,59 +42,21 @@ function Dashboard() {
         })
     }
 
-    const approveForm = (id) => {
-        axios.post("http://localhost:5000/admin/appove-form/" + id).then((response) => {
-            console.log(response, 'approve');
-            if (response.status == 200) {
-                console.log(response.data, 'heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-                alert('Form Approved Sucessfully')
-                // setErrorMessage('Form Approved')
-
-            } else {
-                console.log(' error somthing went wrong');
-                alert('Something Went Wrong')
-                // setErrorMessage('something went wrong')
-            }
-        }).catch((error) => {
-            console.log(error.message);
-            alert(error.message)
-            // setErrorMessage(error.message)
-        })
-    }
-
-    const rejectForm = (id) => {
-        axios.post("http://localhost:5000/admin/reject-form/" + id).then((response) => {
-            console.log(response, 'reject');
-            if (response.status == 200) {
-                console.log(response.data, 'rejjjjjjjjjjjjjj');
-                alert('Form Rejected Sucessfully')
-            } else {
-                console.log('rejected not completed ');
-                alert('Something Went Wrong')
-            }
-        }).catch((error) => {
-            console.log(error.message, 'rrrrrrrrrrrr');
-            alert(error.message)
-        })
-    }
-
-
-
     return (
         <div className='w-4/5'>
              <div className='m-6 pb-2 pr-7'>
                     <button className='border w-50 px-4 py-1 rounded-full float-right  bg-slate-700  hover:bg-slate-600  text-white' >Logout</button>
-
+    
                 </div>
             <div class="bg-white p-8 rounded-md  ">
                
                 <div class=" flex items-center justify-between pb-6 ">
-
+    
                     <div>
                         <h2 class="text-gray-600 font-semibold">INCUBATION LIST</h2>
-                        <span class="text-xs">Pending Companies</span>
+                        <span class="text-xs">Rejected Companies</span>
                     </div>
-                    <p>{errorMessage}</p>
+                    {/* <p>{errorMessage}</p> */}
                     <div class="flex items-center justify-between">
                         <div class="flex bg-gray-50 items-center p-2 rounded-md">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
@@ -129,7 +91,7 @@ function Dashboard() {
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                             Company Name
                                         </th>
-
+    
                                         <th
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                             Status
@@ -138,15 +100,15 @@ function Dashboard() {
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                             Action
                                         </th>
-
+    
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
                                         state.map((obj, index) => {
-
+    
                                             return (
-
+    
                                                 <tr>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <div class="flex items-center">
@@ -170,7 +132,7 @@ function Dashboard() {
                                                             {obj.companyname}
                                                         </p>
                                                     </td>
-
+    
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <span
                                                             class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
@@ -180,20 +142,20 @@ function Dashboard() {
                                                         </span>
                                                     </td>
                                                     <td className='flex m-3'>
-
+    
                                                         <button className='border w-full  my-1 py-2 px-2 rounded-full bg-indigo-600  hover:bg-indigo-500 relative text-white' onClick={(e) => { fullDetails(obj._id) }}>Open</button>
-                                                        <button className='border w-full ml-5  my-1 py-2 px-3 rounded-full bg-zinc-600  hover:bg-zinc-500 relative text-white' onClick={(e) => { approveForm(obj._id) }} >Approve</button>
-                                                        <button className='border w-full ml-5 my-1 py-2 px-3 rounded-full bg-slate-800  hover:bg-slate-600 relative text-white' onClick={(e) => { rejectForm(obj._id) }} >Reject</button>
+                                                        {/* <button className='border w-full ml-5  my-1 py-2 px-3 rounded-full bg-zinc-600  hover:bg-zinc-500 relative text-white' onClick={(e) => { approveForm(obj._id) }} >Approve</button> */}
+                                                        {/* <button className='border w-full ml-5 my-1 py-2 px-3 rounded-full bg-slate-800  hover:bg-slate-600 relative text-white' onClick={(e) => { rejectForm(obj._id) }} >Reject</button> */}
                                                     </td>
-
+    
                                                 </tr>
                                             )
                                         })
                                     }
-
-
-
-
+    
+    
+    
+    
                                 </tbody>
                             </table>
                             {showModal ? (
@@ -251,14 +213,14 @@ function Dashboard() {
                                                         </tbody>
                                                     </table>
                                                 </div>
-
+    
                                             </div>
                                         </div>
                                     </div>
                                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                                 </>
                             ) : null}
-
+    
                             <div
                                 class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
                                 <span class="text-xs xs:text-sm text-gray-900">
@@ -281,8 +243,8 @@ function Dashboard() {
                 </div>
             </div>
         </div >
-
+    
     )
 }
 
-export default Dashboard
+export default RejectedList

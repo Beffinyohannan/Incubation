@@ -7,12 +7,12 @@ function Sidebar() {
             class="z-20  w-1/5 h-screen  overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0"
         >
             <div class="py-4 text-gray-500 dark:text-gray-400">
-                <a
+                <Link
                     class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-                    href="#"
+                    
                 >
                     Company
-                </a>
+                </Link>
                 <ul class="mt-6">
                     <li class="relative px-6 py-3">
                         <span
@@ -43,34 +43,34 @@ function Sidebar() {
                     
                     <li class="relative px-6 py-3">
 
-                        <a
+                        <Link
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="index.html"
+                            to={'/admin-approved-list'}
                         >
 
                             <span class="ml-4">Approved List</span>
-                        </a>
+                        </Link>
                     </li>
 
                     <li class="relative px-6 py-3">
 
-                        <a
+                        <Link
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="index.html"
+                           to={'/admin-rejected-list'}
                         >
 
                             <span class="ml-4">Rejected List</span>
-                        </a>
+                        </Link>
                     </li>
                     <li class="relative px-6 py-3">
 
-                        <a
+                        <Link
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="index.html"
+                            to={'/admin-Book-slot'}
                         >
 
                             <span class="ml-4">Booking Slot</span>
-                        </a>
+                        </Link>
                     </li>
                     
 
@@ -79,12 +79,13 @@ function Sidebar() {
                 </ul>
 
                 <div class="px-6 my-6">
-                    <button
+                    <Link
                         class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                        to={'/admin-create-slot'}
                     >
                         Create Solt
                         <span class="ml-2" aria-hidden="true">+</span>
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div >

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCookies } from "react-cookie";
-import { userContext } from '../../../store/UseContext';
+import { UserContext } from '../../../store/UseContext';
 
 
 function Home() {
@@ -10,7 +10,7 @@ function Home() {
   const token = window.localStorage.getItem("token")
   const [cookies, setCookie] = useCookies();
   const [state, setState] = useState('')
-  const {userdetails,setUserdetails}=useContext(userContext)
+  const {userdetails,setUserdetails}=useContext(UserContext)
   // const {usersdetails}=useContext(userContext)
   console.log("jkjk");
   console.log(userdetails);
@@ -21,8 +21,8 @@ function Home() {
   // console.log(cookies)
   useEffect(() => {
     axios.post('http://localhost:5000/homepage', { ...cookies }).then((response) => {
-      console.log("mhgfghfhg", response.data.status)
-      // setUserdetails(response.data)
+      console.log("mhgfghfhg", response.data.data)
+      // setUserdetails(response.data.data)
       if (response.data.status == "errors") {
         console.log("No jwt provided")
         // window.location.href="/login"
