@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import loginImg from '../../../assets/login.jpg'
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { useCookies } from 'react-cookie';
+import Swal from 'sweetalert2'
+
 
 function Login() {
 
     const initialValues ={email:"",password:""}
     const [formValues,setFormValues]=useState(initialValues)
     const [cookies, setCookie] = useCookies(['user']);
+    const navigate = useNavigate()
+
 
     const [error, setError] = useState({});
 
@@ -38,10 +42,19 @@ function Login() {
             axios.post('http://localhost:5000/login',{...formValues}).then((response)=>{
                 console.log(response.data.error);
                 if (response.data.state=="ok") {
-                    alert("login sucessful")
+                    // alert("login sucessful")
                     setCookie('token', response.data.data, { path: '/' });
                   //  window.localStorage.setItem("token",response.data.data)
-                    window.location.href="/"
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'You are successfully logged in',
+                        showConfirmButton: false,
+                        timer: 1500
+                      }).then(()=>{
+                        // window.location.href = "/"
+                        navigate('/')
+                      })
                 }
             })
         }
@@ -72,6 +85,10 @@ function Login() {
 
         return error;
     }
+// const cc=cookies
+//     useEffect(()=>{
+//         { cc?  window.location.href="/" : ''}
+//     },[])
 
   return (
     <div className='grid grid-cols-1  h-screen w-full'>

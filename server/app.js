@@ -37,3 +37,4 @@ app.listen(port,()=>{console.log("server started on port 5000")})
 
 
 module.exports =app;
+

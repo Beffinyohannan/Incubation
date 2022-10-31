@@ -16,7 +16,8 @@ const applicationSchema = mongoose.Schema({
    image:{
     type:String,
     require:true
-   }
+   },
+   userId:mongoose.Types.ObjectId
 })
 
 const AppliForm = mongoose.model("applicationFrom",applicationSchema)

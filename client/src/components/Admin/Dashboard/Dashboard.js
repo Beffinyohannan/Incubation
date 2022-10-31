@@ -1,6 +1,11 @@
 import axios from 'axios'
 import React, { useEffect, useState, useContext } from 'react'
 import { ApplicationContext } from '../../../store/ApplicationContext'
+import { UserContext } from '../../../store/UseContext';
+import {confirmAlert} from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import Swal from 'sweetalert2'
+
 
 function Dashboard() {
     const [state, setState] = useState([])
@@ -9,7 +14,7 @@ function Dashboard() {
     const [errorMessage, setErrorMessage] = useState('')
     const [modalData, setModalData] = useState({
         name: '', address: '', email: '',
-        phone: '', company_name: '',
+        phone: '', companyname: '',
         //  Incubation: '',
         image: '', status: ''
     });
@@ -34,7 +39,7 @@ function Dashboard() {
             if (obj._id === id) {
                 setModalData({
                     name: obj.name, address: obj.address, email: obj.email,
-                    phone: obj.phone, company_name: obj.company_name, Incubation: obj.Incubation,
+                    phone: obj.phone, companyname: obj.companyname, Incubation: obj.Incubation,
                     image: obj.image, status: obj.status
                 })
                 setShowModal(true)
@@ -43,49 +48,125 @@ function Dashboard() {
     }
 
     const approveForm = (id) => {
-        axios.post("http://localhost:5000/admin/appove-form/" + id).then((response) => {
-            console.log(response, 'approve');
-            if (response.status == 200) {
-                console.log(response.data, 'heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-                alert('Form Approved Sucessfully')
-                // setErrorMessage('Form Approved')
+        confirmAlert({
+            title: 'Confirm your submit',
+            message: 'Are you sure to Approve.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {
+                    axios.post("http://localhost:5000/admin/appove-form/" + id).then((response) => {
+                        console.log(response, 'approve');
+                        if (response.status == 200) {
+                            console.log(response.data, 'heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+                            // alert('Form Approved Sucessfully')
+                            // setErrorMessage('Form Approved')
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Form Approved Sucessfully',
+                                showConfirmButton: false,
+                                timer: 1500
+                              })
+            
+                        } else {
+                            console.log(' error somthing went wrong');
+                            // alert('Something Went Wrong')
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Something Went Wrong',
+                                showConfirmButton: false,
+                                timer: 1500
+                              })
+                          
+                        }
+                    }).catch((error) => {
+                        console.log(error.message);
+                        // alert(error.message)
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: error.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                        
+                    })
+                }
+              },
+              {
+                label: 'No',
+                // onClick: () => alert('Click No')
+              }
+            ]
+          });
 
-            } else {
-                console.log(' error somthing went wrong');
-                alert('Something Went Wrong')
-                // setErrorMessage('something went wrong')
-            }
-        }).catch((error) => {
-            console.log(error.message);
-            alert(error.message)
-            // setErrorMessage(error.message)
-        })
+       
     }
 
     const rejectForm = (id) => {
-        axios.post("http://localhost:5000/admin/reject-form/" + id).then((response) => {
-            console.log(response, 'reject');
-            if (response.status == 200) {
-                console.log(response.data, 'rejjjjjjjjjjjjjj');
-                alert('Form Rejected Sucessfully')
-            } else {
-                console.log('rejected not completed ');
-                alert('Something Went Wrong')
-            }
-        }).catch((error) => {
-            console.log(error.message, 'rrrrrrrrrrrr');
-            alert(error.message)
-        })
+        confirmAlert({
+            title: 'Confirm your submit',
+            message: 'Are you sure to Reject.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {
+                    axios.post("http://localhost:5000/admin/reject-form/" + id).then((response) => {
+                        console.log(response, 'reject');
+                        if (response.status == 200) {
+                            console.log(response.data, 'rejjjjjjjjjjjjjj');
+                            // alert('Form Rejected Sucessfully')
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Form Rejected Sucessfully',
+                                showConfirmButton: false,
+                                timer: 1500
+                              })
+                        } else {
+                            console.log('rejected not completed ');
+                            // alert('Something Went Wrong')
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Something Went Wrong',
+                                showConfirmButton: false,
+                                timer: 1500
+                              })
+                        }
+                    }).catch((error) => {
+                        console.log(error.message, 'rrrrrrrrrrrr');
+                        // alert(error.message)
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: error.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                    })
+                }
+              },
+              {
+                label: 'No',
+                // onClick: () => alert('Click No')
+              }
+            ]
+          });
+
+       
     }
 
 
 
     return (
         <div className='w-4/5'>
-             <div className='m-6 pb-2 pr-7'>
+             {/* <div className='m-6 pb-2 pr-7'>
                     <button className='border w-50 px-4 py-1 rounded-full float-right  bg-slate-700  hover:bg-slate-600  text-white' >Logout</button>
 
-                </div>
+                </div> */}
             <div class="bg-white p-8 rounded-md  ">
                
                 <div class=" flex items-center justify-between pb-6 ">
@@ -96,7 +177,7 @@ function Dashboard() {
                     </div>
                     <p>{errorMessage}</p>
                     <div class="flex items-center justify-between">
-                        <div class="flex bg-gray-50 items-center p-2 rounded-md">
+                        {/* <div class="flex bg-gray-50 items-center p-2 rounded-md">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
                                 fill="currentColor">
                                 <path fill-rule="evenodd"
@@ -104,7 +185,7 @@ function Dashboard() {
                                     clip-rule="evenodd" />
                             </svg>
                             <input class="bg-gray-50 outline-none ml-1 block " type="text" name="" id="" placeholder="search..." />
-                        </div>
+                        </div> */}
                         {/* <div class="lg:ml-40 ml-10 space-x-8">
                             <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Report</button>
                             <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Create</button>
@@ -206,7 +287,7 @@ function Dashboard() {
                                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                                 {/*header*/}
                                                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                                                    <h3 className="text-3xl font-semibold">{modalData.company_name}</h3>
+                                                    <h3 className="text-3xl font-semibold">{modalData.companyname}</h3>
                                                     <button
                                                         className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                                         onClick={() => setShowModal(false)}
@@ -236,10 +317,10 @@ function Dashboard() {
                                                                 <th className='text-right pr-2 w-[35%] align-top'>Address : </th>
                                                                 <td width="200px">{modalData.address}</td>
                                                             </tr>
-                                                            <tr className='pt-2'>
+                                                            {/* <tr className='pt-2'>
                                                                 <th className='text-right pr-2 w-[35%]'>Incubation : </th>
                                                                 <td width="200px"> {modalData.Incubation}</td>
-                                                            </tr>
+                                                            </tr> */}
                                                             <tr className='pt-2'>
                                                                 <th className='text-right pr-2 w-[35%]'>Status : </th>
                                                                 <td width="200px">{modalData.status}</td>
@@ -259,7 +340,7 @@ function Dashboard() {
                                 </>
                             ) : null}
 
-                            <div
+                            {/* <div
                                 class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
                                 <span class="text-xs xs:text-sm text-gray-900">
                                     Showing 1 to 10 of 50 Entries
@@ -275,7 +356,7 @@ function Dashboard() {
                                         Next
                                     </button>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

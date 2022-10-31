@@ -2,8 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react'
 import { ApplicationContext } from '../../../store/ApplicationContext'
 
-
-function ApprovedList() {
+function Progress() {
     const [state, setState] = useState([])
     const [showModal, setShowModal] = useState(false);
     const { applications, setApplications } = useContext(ApplicationContext)
@@ -16,7 +15,7 @@ function ApprovedList() {
     });
 
     useEffect(() => {
-        axios.get("http://localhost:5000/admin/approved-list").then((response) => {
+        axios.get("http://localhost:5000/admin/progress").then((response) => {
             // console.log(response.data);
             const { data } = response
             if (response.data) {
@@ -53,8 +52,8 @@ function ApprovedList() {
                 <div class=" flex items-center justify-between pb-6 ">
 
                     <div>
-                        <h2 class="text-gray-600 font-semibold">INCUBATION LIST</h2>
-                        <span class="text-xs">Approved Companies</span>
+                        <h2 class="text-gray-600 font-semibold">Progress Status</h2>
+                        {/* <span class="text-xs">Approved Companies</span> */}
                     </div>
                     {/* <p>{errorMessage}</p> */}
                     <div class="flex items-center justify-between">
@@ -95,6 +94,10 @@ function ApprovedList() {
                                         <th
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                             Status
+                                        </th>
+                                        <th
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Progress
                                         </th>
                                         <th
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -141,6 +144,11 @@ function ApprovedList() {
                                                             <span class="relative">{obj.status}</span>
                                                         </span>
                                                     </td>
+                                                    <td>
+                                                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-900 ">
+                                                            <div class={` h-2.5 rounded-full ${obj.status === "approved" ? "w-[75%] bg-blue-600 dark:bg-blue-500" : obj.status === "pending" ? "w-[50%] bg-red-600 dark:bg-red-500" : obj.status === "rejected" ? "w-[25%] bg-orange-600 dark:bg-orange-500" : obj.status === "booked" ? "w-[100%] bg-green-600 dark:bg-green-500": ''}`}></div>
+                                                        </div>
+                                                    </td>
                                                     <td className='flex m-3'>
 
                                                         <button className='border w-full  my-1 py-2 px-2 rounded-full bg-indigo-600  hover:bg-indigo-500 relative text-white' onClick={(e) => { fullDetails(obj._id) }}>Open</button>
@@ -168,7 +176,7 @@ function ApprovedList() {
                                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                                 {/*header*/}
                                                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                                                    <h3 className="text-3xl font-semibold">{modalData.companyname}</h3>
+                                                    <h3 className="text-3xl font-semibold ">{modalData.companyname}</h3>
                                                     <button
                                                         className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                                         onClick={() => setShowModal(false)}
@@ -247,4 +255,4 @@ function ApprovedList() {
     )
 }
 
-export default ApprovedList
+export default Progress

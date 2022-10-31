@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import loginImg from '../../../assets/login.jpg'
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { useCookies } from 'react-cookie';
+import Swal from 'sweetalert2'
+
 
 
 function CreateSlot() {
@@ -10,6 +12,8 @@ function CreateSlot() {
     const initialValues ={name:"",id:""}
     const [formValues,setFormValues]=useState(initialValues)
     const [cookies, setCookie] = useCookies(['user']);
+    const navigate = useNavigate()
+
 
     const [error, setError] = useState({});
 
@@ -40,12 +44,26 @@ function CreateSlot() {
                 // console.log('hhhhhhhhhhhhhhhhhhhhhhh');
                 console.log(response.data);
                 if (response.data.state=="ok") {
-                    alert("Slot Created sucessfully")
-                  //  window.localStorage.setItem("token",response.data.data)
-                    // window.location.href="/"
+                    // alert("Slot Created sucessfully")
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Slot Created sucessfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                      }).then(()=>{
+                        navigate("/admin-Book-slot")
+                      })
                 }else {
                     console.log('else condition');
-                    alert(response.data)
+                    // alert(response.data)
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: response.data,
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
                 }
             })
         }

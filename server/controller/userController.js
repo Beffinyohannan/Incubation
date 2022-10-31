@@ -5,7 +5,7 @@ const AppliForm =require('../model/applicationModel')
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
 const multer = require('multer')
-
+const mongoose= require("mongoose")
 
 
   
@@ -90,20 +90,29 @@ const homePage =async(req,res,next)=>{
 const applicationForm = async(req,res)=>{
     console.log(req.body);
     try {
-        let {name,email,city,state,companyname,phone,address,image}=req.body
-        const appForm = await new AppliForm({
-            name,
-            email,
-            city,
-            state,
-            companyname,
-            phone,
-            address,
-            image
-        })
-
-        await appForm.save()
-        res.status(200).json({res:appForm})
+        let {name,email,city,state,companyname,phone,address,image,userId}=req.body
+        let pending = await AppliForm.findOne({userId,status:"pending"})
+        console.log(pending);
+        if (pending) {
+            console.log('detailsssssssssss');
+            res.json('your application is pending plese wait to approve it .')
+        }else{
+            console.log('no details');
+            const appForm =  new AppliForm({
+                name,
+                email,
+                city,
+                state,
+                companyname,
+                phone,
+                address,
+                image,
+                userId:mongoose.Types.ObjectId(userId)
+            })
+    
+            await appForm.save()
+            res.json({state:'ok',res:appForm})
+        }
 
     } catch (error) {
         console.log(error.message);
@@ -111,5 +120,16 @@ const applicationForm = async(req,res)=>{
 
 }
 
+const checkApplication =async(req,res)=>{
+    let{userId}=req.body
+    let pending = await AppliForm.findOne({userId,status:"pending"})
+    if (pending) {
+        res.json({status:'found'})
+    }else{
+        res.json({status:'error'})
+    }
 
-module.exports={postSignup,postLogin,homePage,applicationForm}
+}
+
+
+module.exports={postSignup,postLogin,homePage,applicationForm,checkApplication}

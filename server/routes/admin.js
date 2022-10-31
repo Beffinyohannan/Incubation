@@ -1,5 +1,5 @@
 const express = require('express');
-const { getDashboard, AdminLogin, approveForm, rejectFrom, approvedList, rejectedList, createSlot, bookingSlot, slotBooking } = require('../controller/adminController');
+const { getDashboard, AdminLogin, approveForm, rejectFrom, approvedList, rejectedList, createSlot, bookingSlot, slotBooking, progress } = require('../controller/adminController');
 const router = express.Router()
 
 router.post("/login",AdminLogin)
@@ -11,6 +11,7 @@ router.get("/rejected-list",rejectedList)
 router.post('/create-slot',createSlot)
 router.get("/booking-slot",bookingSlot)
 router.get('/slotBooking',slotBooking)
+router.get('/progress',progress)
 
 
 module.exports = router;

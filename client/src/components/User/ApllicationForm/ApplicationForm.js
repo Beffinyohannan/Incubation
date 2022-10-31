@@ -1,11 +1,15 @@
 import axios from 'axios';
-import React,{useRef, useState} from 'react'
+import React,{useContext, useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
+import { UserContext } from '../../../store/UseContext';
+import Swal from 'sweetalert2'
+
 
 function ApplicationForm() {
     const imgRef = useRef(null)
     const initialValues = { name: '', email: '',city:'',state:'',companyname:'',address:'', phone: '', password: '',image:'' }
     const [formValues, SetFormValues] = useState(initialValues)
+    const {userDetails,setUserDetails}=useContext(UserContext)
     const navigate = useNavigate()
     // const fileUpload =(e)=>{
     //     SetFormValues({
@@ -13,7 +17,13 @@ function ApplicationForm() {
     //     })
     // }
 
+    console.log("jkhkjhhja");
+    console.log(userDetails);
+    const userId= userDetails._id
+    console.log(userId);
     const [error, setError] = useState({});
+
+
 
     const signupData = {
         ...formValues
@@ -38,10 +48,26 @@ function ApplicationForm() {
         if (Object.keys(errors).length == 0) {
             console.log("hello");
 
-            axios.post('http://localhost:5000/application-from', { ...formValues }).then(() => {
-                alert('Form Submitted sucessfully')
+            axios.post('http://localhost:5000/application-from', { ...formValues,userId }).then((response) => {
+
+            console.log(response);
+            if (response.data.state) {
+                
+                // alert('Form Submitted sucessfully')
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Form Submitted sucessfull',
+                    showConfirmButton: false,
+                    timer: 1500
+                  }).then(()=>{
+                    // window.location.href = "/"
+                    navigate('/')
+                  })
     
-                navigate('/homepage')
+            }else{
+                alert(response.data)
+            }
             })
         }
 
@@ -144,10 +170,10 @@ function ApplicationForm() {
                         <div className='flex flex-col py-2'>
                         {/* <img  alt="Posts" width="200px" height="200px" src={image ? URL.createObjectURL(formValues.image) : ''}></img> */}
 
-                            <label htmlFor="">Image</label>
+                            {/* <label htmlFor="">Image</label>
                             <input className='' name='image' ref={imgRef} type="file"  
                             // onChange={fileUpload} 
-                            />
+                            /> */}
                              <p className='text-red-500'>{error.image}</p>
                         </div>
                         

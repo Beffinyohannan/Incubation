@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState,useReducer } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+
 
 function BookSlot() {
 
@@ -13,6 +15,7 @@ function BookSlot() {
         id: '',
         index: ''
     });
+    console.log(selected,'gggggggggg');
 
     useEffect(() => {
         axios.get("http://localhost:5000/admin/booking-slot").then((response) => {
@@ -47,6 +50,14 @@ function BookSlot() {
         axios.get(`http://localhost:5000/admin/slotBooking?slotId=${selected.index}&companyId=${selected.id}`).then((response => {
             forceUpdate()
             setShowModal(false)
+            // alert('sucess')
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'slot booked successfully',
+                showConfirmButton: false,
+                timer: 1500
+              })
         })).catch(error => console.log(error))
         
     }
@@ -54,15 +65,25 @@ function BookSlot() {
 
     return (
         <div className='w-4/5'>
-            <h2 class="text-gray-600 font-semibold m-10" >Slot Booking</h2>
+            <h2 class="text-gray-600 font-semibold m-10 " >Slot Booking</h2>
 
 
-            <div className='flex justify-center'>
+            <div className='grid grid-cols-8 ml-3  justify-center'>
 
                 {
                     state.map((item) => {
                         return (
-                            <div className={` p-10 w-28 h-28 ml-2 cursor-pointer bg-blue-300  ${item.status ? "bg-blue-700" : "bg-blue-300"}`} onClick={() => item.status ? alert("This slot is Already Booked") : fullDetails(item.id)}>{item.id}</div>
+                            <div className={`mt-3  text-center  w-28 h-28 ml-2 cursor-pointer bg-blue-300  ${item.status ? "bg-blue-700" : "bg-blue-300"}`} onClick={() => item.status ? 
+                            // alert("This slot is Already Booked")
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: "This slot is Already Booked",
+                                showConfirmButton: false,
+                                timer: 1500
+                              }) : fullDetails(item.id)}> <p className='p-5'>{item.id}</p>
+                            {item.status ? <div className='w-16 ml-6'><p className='text-xs text-center text-slate-200' >Booked by: {item.bookedId}</p></div>:null}
+                            </div>
 
                         )
                     })
@@ -102,7 +123,7 @@ function BookSlot() {
                                         {
                                             applicationList.map((iteams, index)=>{
                                                 return(
-                                                    <option value={iteams._id} >{iteams.companyname}</option>
+                                                    <option value={iteams.companyname} >{iteams.companyname}</option>
                                                 )
                                             })
                                         }

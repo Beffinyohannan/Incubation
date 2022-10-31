@@ -140,7 +140,7 @@ const createSlot = async (req, res) => {
 
 const slotBooking =(req,res)=>{
     try {
-        AppliForm.findByIdAndUpdate({_id:req.query.companyId},
+        AppliForm.findOneAndUpdate({companyname:req.query.companyId},
             {
                 $set:{status:'booked'}
             }).then((response)=>{
@@ -165,6 +165,20 @@ const slotBooking =(req,res)=>{
     }
 }
 
+const progress =(req,res)=>{
+    try {
+        AppliForm.find().then((data)=>{
+            res.json(data)
+        }).catch((error)=>{
+            console.log(error.message);
+            res.json(error.message)
+        })
+    } catch (error) {
+        console.log(error.message);
+            res.json(error.message)
+    }
+}
+
 
 module.exports = {
     AdminLogin,
@@ -175,6 +189,7 @@ module.exports = {
     rejectedList,
     createSlot,
     bookingSlot,
-    slotBooking
+    slotBooking,
+    progress
     
 }

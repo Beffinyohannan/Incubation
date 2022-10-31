@@ -11,18 +11,19 @@ import BookingSlotPage from './Pages/BookingSlotPage';
 import CreateSlotPage from './Pages/CreateSlotPage';
 import HomePage from './Pages/HomePage';
 import LoginPage from './Pages/LoginPage';
+import ProgressPage from './Pages/ProgressPage';
 import SignupPage from './Pages/SignupPage';
-import UserDetail from './store/UseContext';
+import User from './store/UseContext';
+import Applications from './store/ApplicationContext';
 function App() {
 
 
   return (
-    <div className="App">
 
-      
+    <User>
+    <Applications>
 
       <Router>
-{/* <UserDetail> */}
         <Routes>
 
           <Route path='/login' element={<LoginPage />} />
@@ -31,6 +32,7 @@ function App() {
           <Route path='/application-form' element={<ApplicationFromPage />} />
 
         </Routes>
+
         <Routes>
           <Route path='/admin-login' element={<AdminLoginPage/>} />
           <Route path='/admin-dashboard' element={<AdminDashboardPage/>} />
@@ -38,13 +40,17 @@ function App() {
           <Route path='/admin-rejected-list' element={<AdminRejectedList/>} />
           <Route path='/admin-create-slot' element={<CreateSlotPage/>} />
           <Route path='/admin-Book-slot' element={<BookingSlotPage/>} />
+          <Route path='/admin-progress' element={<ProgressPage/>} />
+          
 
         </Routes>
-        {/* </UserDetail> */}
 
       </Router>
+
+
+</Applications>
+</User>
       
-    </div>
   );
 }
 
