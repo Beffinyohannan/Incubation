@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState, useContext } from 'react'
 import { ApplicationContext } from '../../../store/ApplicationContext'
 import { UserContext } from '../../../store/UseContext';
-import {confirmAlert} from 'react-confirm-alert'
+import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
 
@@ -18,11 +18,12 @@ function Dashboard() {
         //  Incubation: '',
         image: '', status: ''
     });
+    const [approve, setApprove] = useState(false)
 
 
     useEffect(() => {
         axios.get("http://localhost:5000/admin/dashboard").then((response) => {
-            // console.log(response.data);
+            console.log(response.data);
             const { data } = response
             if (response.data) {
                 setState(data)
@@ -30,7 +31,7 @@ function Dashboard() {
 
             }
         })
-    })
+    }, [approve])
 
     // console.log(applications,'appliction');
 
@@ -52,57 +53,59 @@ function Dashboard() {
             title: 'Confirm your submit',
             message: 'Are you sure to Approve.',
             buttons: [
-              {
-                label: 'Yes',
-                onClick: () => {
-                    axios.post("http://localhost:5000/admin/appove-form/" + id).then((response) => {
-                        console.log(response, 'approve');
-                        if (response.status == 200) {
-                            console.log(response.data, 'heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-                            // alert('Form Approved Sucessfully')
-                            // setErrorMessage('Form Approved')
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Form Approved Sucessfully',
-                                showConfirmButton: false,
-                                timer: 1500
-                              })
-            
-                        } else {
-                            console.log(' error somthing went wrong');
-                            // alert('Something Went Wrong')
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Something Went Wrong',
-                                showConfirmButton: false,
-                                timer: 1500
-                              })
-                          
-                        }
-                    }).catch((error) => {
-                        console.log(error.message);
-                        // alert(error.message)
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: error.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                          })
-                        
-                    })
-                }
-              },
-              {
-                label: 'No',
-                // onClick: () => alert('Click No')
-              }
-            ]
-          });
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        axios.post("http://localhost:5000/admin/appove-form/" + id).then((response) => {
+                            console.log(response, 'approve');
+                            if (response.status == 200) {
+                                console.log(response.data, 'heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+                                setApprove(!approve)
 
-       
+                                // alert('Form Approved Sucessfully')
+                                // setErrorMessage('Form Approved')
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Form Approved Sucessfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+
+                            } else {
+                                console.log(' error somthing went wrong');
+                                // alert('Something Went Wrong')
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Something Went Wrong',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+
+                            }
+                        }).catch((error) => {
+                            console.log(error.message);
+                            // alert(error.message)
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: error.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        })
+                    }
+                },
+                {
+                    label: 'No',
+                    // onClick: () => alert('Click No')
+                }
+            ]
+        });
+
+
     }
 
     const rejectForm = (id) => {
@@ -110,65 +113,66 @@ function Dashboard() {
             title: 'Confirm your submit',
             message: 'Are you sure to Reject.',
             buttons: [
-              {
-                label: 'Yes',
-                onClick: () => {
-                    axios.post("http://localhost:5000/admin/reject-form/" + id).then((response) => {
-                        console.log(response, 'reject');
-                        if (response.status == 200) {
-                            console.log(response.data, 'rejjjjjjjjjjjjjj');
-                            // alert('Form Rejected Sucessfully')
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        axios.post("http://localhost:5000/admin/reject-form/" + id).then((response) => {
+                            console.log(response, 'reject');
+                            if (response.status == 200) {
+                                console.log(response.data, 'rejjjjjjjjjjjjjj');
+                                setApprove(!approve)
+                                // alert('Form Rejected Sucessfully')
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Form Rejected Sucessfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            } else {
+                                console.log('rejected not completed ');
+                                // alert('Something Went Wrong')
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Something Went Wrong',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                        }).catch((error) => {
+                            console.log(error.message, 'rrrrrrrrrrrr');
+                            // alert(error.message)
                             Swal.fire({
                                 position: 'top-end',
                                 icon: 'success',
-                                title: 'Form Rejected Sucessfully',
+                                title: error.message,
                                 showConfirmButton: false,
                                 timer: 1500
-                              })
-                        } else {
-                            console.log('rejected not completed ');
-                            // alert('Something Went Wrong')
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Something Went Wrong',
-                                showConfirmButton: false,
-                                timer: 1500
-                              })
-                        }
-                    }).catch((error) => {
-                        console.log(error.message, 'rrrrrrrrrrrr');
-                        // alert(error.message)
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: error.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                          })
-                    })
+                            })
+                        })
+                    }
+                },
+                {
+                    label: 'No',
+                    // onClick: () => alert('Click No')
                 }
-              },
-              {
-                label: 'No',
-                // onClick: () => alert('Click No')
-              }
             ]
-          });
+        });
 
-       
+
     }
 
 
 
     return (
         <div className='w-4/5'>
-             {/* <div className='m-6 pb-2 pr-7'>
+            {/* <div className='m-6 pb-2 pr-7'>
                     <button className='border w-50 px-4 py-1 rounded-full float-right  bg-slate-700  hover:bg-slate-600  text-white' >Logout</button>
 
                 </div> */}
             <div class="bg-white p-8 rounded-md  ">
-               
+
                 <div class=" flex items-center justify-between pb-6 ">
 
                     <div>
