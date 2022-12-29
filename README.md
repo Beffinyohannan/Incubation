@@ -1,9 +1,15 @@
 # Incubation Application (slot booking system)
 
 This application is based on a booking site model .In this application the companies can book a slot for the company .the comapny can fill up a form and reequest for the booking and the admin check the request and the admin accept the request and schedule a slot for the company. 
+
+Movie trailor app
+
+Api integration of TMDB(Movie Database)
+
+Designed similar to Netflix app
+
  
 
-## API Reference
 
 
 
