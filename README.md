@@ -7,15 +7,22 @@ This application is based on a booking site model .In this application the compa
 
 
 
-#### Techologies Used
+## Techologies Used
 
 React Js 
+
 Node Js 
+
 MongoDB 
+
 Express JS 
+
 Javascript
+
 Axios 
+
 Tailwind CSS 
+
 JWT Token
 
 
