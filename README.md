@@ -2,15 +2,17 @@
 
 This application is based on a booking site model .In this application the companies can book a slot for the company .the comapny can fill up a form and reequest for the booking and the admin check the request and the admin accept the request and schedule a slot for the company. 
 
-Movie trailor app
+## features
 
-Api integration of TMDB(Movie Database)
+Sign up and Login authentication
 
-Designed similar to Netflix app
+JWT Authentication
 
- 
+Slot Booking
 
+Application submission
 
+Admin side application management , progress status
 
 
 ## Techologies Used
@@ -58,6 +60,14 @@ Start the server
 bash
   npm run start
 
+## screenshots
+
+![incubation landingpage](https://user-images.githubusercontent.com/107913841/210035884-0f3f77f6-ead8-4177-acad-2df3a29abf55.png)
+![incubation login](https://user-images.githubusercontent.com/107913841/210035886-562c2ff1-4a21-4bab-b914-e65c1ff21e3f.png)
+![incubation dasboard](https://user-images.githubusercontent.com/107913841/210035897-dcf76dbe-9c7b-49c2-bfdd-fa26731bff88.png)
+![incubation slot booking](https://user-images.githubusercontent.com/107913841/210035902-e6eb63cb-8977-4096-ba20-0d71f4041e78.png)
+![incubation create slot](https://user-images.githubusercontent.com/107913841/210035908-4ae1cc84-024b-4ddf-8720-4943958c3428.png)
+![incubation progress status](https://user-images.githubusercontent.com/107913841/210035923-8b779ade-0c57-4b02-abb4-c113af44c5d5.png)
 
 
 ## 🚀 About Me
